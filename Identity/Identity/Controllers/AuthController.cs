@@ -42,9 +42,9 @@ namespace Identity.Controllers
                 return RedirectToAction("Index", "Home");
 
             }
-        
-
           
+
+
             return View();
           
 
@@ -97,12 +97,12 @@ namespace Identity.Controllers
             var user = _data.Users.FirstOrDefault(u => u.Token == cookie.Value);
             if (user==null)
             {
-                Response.Cookies.Remove("token");
+                Response.Cookies["token"].Expires = DateTime.Now.AddDays(-1);
                 return RedirectToAction("Index", "Home");
             }
             user.Token = null;
             _data.SaveChanges();
-            Response.Cookies.Remove("token");
+            Response.Cookies["token"].Expires = DateTime.Now.AddDays(-1);
             return RedirectToAction("Index", "Home");
         }
     }
